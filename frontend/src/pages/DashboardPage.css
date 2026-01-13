@@ -1,0 +1,32 @@
+.dashboard {
+  min-height: 100vh;
+  background: var(--bg-dark);
+}
+
+.dashboard-layout {
+  display: flex;
+  padding-top: 70px;
+  min-height: 100vh;
+}
+
+.dashboard-main {
+  flex: 1;
+  margin-left: 240px;
+  padding: var(--space-2xl);
+  max-width: calc(100% - 240px);
+}
+
+@media (max-width: 1024px) {
+  .dashboard-main {
+    margin-left: 200px;
+    max-width: calc(100% - 200px);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-main {
+    margin-left: 0;
+    max-width: 100%;
+    padding: var(--space-lg);
+  }
+}

@@ -1,71 +1,225 @@
-# Getting Started with Create React App
+# ✨ Lustre Jewelry - AI-Powered Jewelry Design Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Transform your jewelry sketches into stunning realistic designs using our custom-trained GAN (Generative Adversarial Network) model.
 
-## Available Scripts
+![Python](https://img.shields.io/badge/python-3.8+-green.svg)
+![Node.js](https://img.shields.io/badge/node.js-16+-green.svg)
+![TensorFlow](https://img.shields.io/badge/tensorflow-2.15-orange.svg)
 
-In the project directory, you can run:
+## 🎯 Overview
 
-### `npm start`
+Lustre Jewelry is a full-stack web application that leverages deep learning to convert hand-drawn jewelry sketches into photorealistic jewelry images. The core of this application is a custom GAN model trained specifically for jewelry design generation.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🧠 GAN Model Details
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Architecture
+- **Model Type:** Generative Adversarial Network (GAN)
+- **Framework:** TensorFlow/Keras
+- **Input Resolution:** 1024x1024 pixels
+- **Output Resolution:** 1024x1024 pixels
 
-### `npm test`
+### Training Details
+- **Training Dataset:** 2,500+ curated jewelry images
+- **Image Pairs:** Sketch-to-realistic jewelry mappings
+- **Training Epochs:** Multiple checkpoints saved (40, 50, 60 epochs)
+- **Model Files:**
+  - `generator_final.keras` - Final model variant 
+  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Image Processing Pipeline
+1. **Background Detection** - Automatically detects dominant background color
+2. **Background Refinement** - Converts background to white for consistency
+3. **Sketch Conversion** - Transforms input to pencil sketch using edge detection
+4. **GAN Processing** - Generates realistic jewelry from sketch
+5. **Post-processing** - Applies final color corrections and format conve
+- OAuth credentials (Google, GitHub, LinkedIn)
 
-### `npm run build`
+## Setup Instructionsi
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Supported Output Formats
+- JPEG
+- PNG
+- WEBP
+- AVIF
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🏗️ Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+lustre-jewelry/
+├── backend/                 # Node.js/Express REST API
+│   ├── config/              # Database & OAuth configuration
+│   ├── middleware/          # Authentication & file upload middleware
+│   ├── models/              # MongoDB/Mongoose schemas
+│   ├── routes/              # API route handlers
+│   └── server.js            # Express server entry point
+│
+├── frontend/                # React.js Web Application
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   └── pages/           # Page components
+│   └── public/              # Static assets
+│
+├── ml-service/              #ython Flask ML Service
+│   ├── app.py               # Flask API with GAN inference
+│   ├── *.keras              # Trained GAN model files
+│   ├── generated/           # Output directory for generated images
+│   └── requirements.txt     # Python dependencies
+│
+└── uploaded/                # User uploaded images storage
+```
 
-### `npm run eject`
+## ⚡ Tech Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Backend
+- **Runtime:** Node.js v16+
+- **Framework:** Express.js
+- **Database:** MongoDB Atlas
+- **Authentication:** JWT, Passport.js (Google, GitHub OAuth)
+- **File Storage:** Cloudinary, Multer
+- **Email:** Nodemailer
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Frontend
+- **Framework:** React 18
+- **Routing:** React Router v7
+- **Icons:** FontAwesome
+- **HTTP Client:** Axios
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### ML Service
+- **Runtime:** Python 3.8+
+- **Framework:** Flask
+- **Deep Learning:** TensorFlow 2.15
+- **Image Processing:** OpenCV, Pillow
+- **CORS:** Flask-CORS
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
+- Node.js v16 or higher
+- Python 3.8 or higher
+- MongoDB Atlas account
+- OAuth credentials (Google, GitHub)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/lustre-jewelry.git
+cd lustre-jewelry
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 2. Backend Setup
+```bash
+cd backend
+npm install
+# Configure .env with your credentials
+npm run dev
+```
+Server runs on **http://localhost:3001**
 
-### Code Splitting
+### 3. Frontend Setup
+```bash
+cd frontend
+npm install
+npm start
+```
+App runs on **http://localhost:3000**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 4. ML Service Setup
+```bash
+cd ml-service
+python -m venv venv
 
-### Analyzing the Bundle Size
+# Windows
+venv\Scripts\activate
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# Mac/Linux
+source venv/bin/activate
 
-### Making a Progressive Web App
+pip install -r requirements.txt
+python app.py
+```
+ML Service runs on **http://localhost:5000**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## ⚙️ Environment Variables
 
-### Advanced Configuration
+### Backend (.env)
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+SESSION_SECRET=your_session_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Frontend (.env)
+```env
+REACT_APP_API_URL=your_backend_api_url
+REACT_APP_ML_SERVICE_URL=your_ml_service_url
+```
 
-### Deployment
+### ML Service (.env)
+```env
+MODEL_PATH=generator_folder_50.keras
+FLASK_PORT=5000
+GENERATED_DIR=generated
+ALLOWED_ORIGINS=your_frontend_url,your_backend_url
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📡 API Endpoints
 
-### `npm run build` fails to minify
+### Authentication
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/create` | Register new user |
+| POST | `/auth/login` | Login with credentials |
+| GET | `/auth/google` | Google OAuth |
+| GET | `/auth/github` | GitHub OAuth |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# jewelry_pattern_generation" 
+### Image Processing
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/image/upload` | Upload sketch image |
+| GET | `/api/image/:filename` | Retrieve image |
+| POST | `/api/image/process` | Process with GAN |
+
+### ML Service
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Health check |
+| POST | `/process-image` | Generate jewelry from sketch |
+
+## 🎨 Features
+
+- **AI-Powered Generation** - Custom GAN model trained on 2,500+ jewelry images
+- **Multiple Model Checkpoints** - Choose from different training stages
+- **User Authentication** - Secure login with email/password or OAuth
+- **Image Gallery** - Save and manage your generated designs
+- **Multiple Output Formats** - Export in JPEG, PNG, WEBP, or AVIF
+- **Real-time Processing** - Fast inference with optimized TensorFlow
+- **Responsive Design** - Works on desktop and mobile devices
+
+## 🔧 Model Selection
+
+You can switch between different model checkpoints by updating the `MODEL_PATH` in `ml-service/.env`:
+
+```env
+# Available models:
+MODEL_PATH=generator_final1.keras      # Final model v1
+
+```
+
+## 📊 Model Performance
+
+The GAN model was trained with the following characteristics:
+- **Dataset Size:** 2,500+ paired images (sketches + realistic jewelry)
+- **Training Time:** Multiple training sessions with checkpoint saving
+- **Input Processing:** Automatic sketch conversion with edge detection
+- **Output Quality:** High-resolution 1024x1024 photorealistic images
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+Built with ❤️ using TensorFlow, React, and Node.js

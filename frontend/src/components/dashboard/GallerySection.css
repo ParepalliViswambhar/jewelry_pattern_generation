@@ -1,0 +1,314 @@
+.section-gallery .section-header {
+  margin-bottom: var(--space-2xl);
+}
+
+.section-gallery .section-header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.section-gallery .section-header p {
+  color: var(--text-secondary);
+}
+
+/* Loading & Empty States */
+.gallery-loading,
+.gallery-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3xl);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.gallery-loading svg,
+.gallery-empty svg {
+  font-size: 3rem;
+  margin-bottom: var(--space-lg);
+  opacity: 0.5;
+}
+
+.gallery-empty h3 {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+/* Gallery Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--space-xl);
+}
+
+.gallery-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.gallery-item:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Comparison Slider */
+.comparison-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: ew-resize;
+  user-select: none;
+}
+
+.comparison-image {
+  position: absolute;
+  inset: 0;
+}
+
+.comparison-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comparison-image.sketch-side {
+  z-index: 2;
+}
+
+.comparison-label {
+  position: absolute;
+  bottom: var(--space-md);
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 3;
+}
+
+.comparison-label.left {
+  left: var(--space-md);
+}
+
+.comparison-label.right {
+  right: var(--space-md);
+}
+
+.slider-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  transform: translateX(-50%);
+  z-index: 10;
+  cursor: ew-resize;
+}
+
+.slider-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--primary-gold);
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.slider-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: var(--primary-gold);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-fast);
+}
+
+.slider-button:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.slider-button span {
+  width: 2px;
+  height: 14px;
+  background: var(--bg-dark);
+  border-radius: 1px;
+}
+
+/* Gallery Info */
+.gallery-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md);
+}
+
+.gallery-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.gallery-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+}
+
+.action-btn.view:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--primary-gold);
+  color: var(--primary-gold);
+}
+
+.action-btn.download:hover {
+  background: rgba(40, 167, 69, 0.1);
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.action-btn.delete:hover {
+  background: rgba(220, 53, 69, 0.1);
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+/* Pagination */
+.gallery-pagination {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-2xl);
+}
+
+.page-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.page-btn:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+}
+
+.page-btn.active {
+  background: var(--primary-gold);
+  border-color: var(--primary-gold);
+  color: var(--bg-dark);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-xl);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-xl);
+  right: var(--space-xl);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.lightbox-close:hover {
+  background: var(--primary-gold);
+  border-color: var(--primary-gold);
+  color: var(--bg-dark);
+}
+
+.lightbox-content {
+  width: 90vw;
+  max-width: 800px;
+}
+
+.lightbox-slider {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--border-subtle);
+}
+
+.lightbox-slider .comparison-slider {
+  aspect-ratio: 1;
+}
+
+.lightbox-slider .slider-button {
+  width: 50px;
+  height: 50px;
+}
+
+.lightbox-slider .slider-button span {
+  height: 18px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox-content {
+    width: 95vw;
+  }
+}

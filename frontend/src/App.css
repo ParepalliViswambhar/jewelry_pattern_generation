@@ -1,0 +1,28 @@
+.App {
+  min-height: 100vh;
+}
+
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+.not-found h1 {
+  font-size: 8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-md);
+}
+
+.not-found p {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+}

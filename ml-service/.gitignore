@@ -1,0 +1,27 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+
+# Model files
+*.h5
+*.hdf5
+*.keras
+
+# Generated images
+generated/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

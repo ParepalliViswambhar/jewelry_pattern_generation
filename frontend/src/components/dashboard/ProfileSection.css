@@ -1,0 +1,68 @@
+.section-profile .section-header {
+  margin-bottom: var(--space-2xl);
+}
+
+.section-profile .section-header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.section-profile .section-header p {
+  color: var(--text-secondary);
+}
+
+.profile-card {
+  max-width: 600px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-light));
+  border-radius: var(--radius-full);
+  color: var(--bg-dark);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--space-xl);
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.profile-field:last-child {
+  border-bottom: none;
+}
+
+.profile-field label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.profile-field span {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.loading-state {
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--space-3xl);
+}

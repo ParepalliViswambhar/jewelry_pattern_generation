@@ -1,0 +1,40 @@
+.section-contact .section-header {
+  margin-bottom: var(--space-2xl);
+}
+
+.section-contact .section-header h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.section-contact .section-header p {
+  color: var(--text-secondary);
+}
+
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+  max-width: 900px;
+}
+
+.contact-card {
+  text-align: center;
+}
+
+.contact-icon {
+  font-size: 2rem;
+  color: var(--primary-gold);
+  margin-bottom: var(--space-md);
+}
+
+.contact-card h3 {
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-card p {
+  color: var(--text-secondary);
+}
