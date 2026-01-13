@@ -4,12 +4,10 @@ import { jwtDecode } from 'jwt-decode';
 import Navbar from '../components/layout/Navbar';
 import ConfirmModal from '../components/ui/ConfirmModal';
 import {
-  DashboardSidebar,
   HomeSection,
   UploadSection,
   GallerySection,
   FAQSection,
-  ProfileSection,
   ContactSection
 } from '../components/dashboard';
 import './DashboardPage.css';
@@ -77,10 +75,8 @@ const DashboardPage = ({ onLogout }) => {
         return <UploadSection />;
       case 'gallery':
         return <GallerySection />;
-      case 'about':
+      case 'faq':
         return <FAQSection />;
-      case 'profile':
-        return <ProfileSection userProfile={userProfile} />;
       case 'contact':
         return <ContactSection />;
       default:
@@ -95,17 +91,12 @@ const DashboardPage = ({ onLogout }) => {
         onLogout={handleSignOutClick} 
         onSectionChange={setActiveSection}
         activeSection={activeSection}
+        userProfile={userProfile}
       />
       
-      <div className="dashboard-layout">
-        <DashboardSidebar 
-          activeSection={activeSection} 
-          onSectionChange={setActiveSection} 
-        />
-        <main className="dashboard-main">
-          {renderSection()}
-        </main>
-      </div>
+      <main className="dashboard-main">
+        {renderSection()}
+      </main>
 
       <ConfirmModal
         isOpen={showSignOutModal}
