@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/layout/Navbar';
 import ConfirmModal from '../components/ui/ConfirmModal';
 import {
@@ -12,27 +12,26 @@ import {
 } from '../components/dashboard';
 import './DashboardPage.css';
 
-const DashboardPage = ({ onLogout }) => {
+const DashboardPage = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [userProfile, setUserProfile] = useState(null);
   const [showSignOutModal, setShowSignOutModal] = useState(false);
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-
-    try {
-      jwtDecode(token);
+    if (token) {
       fetchUserProfile(token);
-    } catch (err) {
-      sessionStorage.removeItem('token');
-      navigate('/login');
     }
-  }, [navigate]);
+  }, []);
+
+  // Use context user as fallback
+  useEffect(() => {
+    if (user && !userProfile) {
+      setUserProfile(user);
+    }
+  }, [user, userProfile]);
 
   const fetchUserProfile = async (token) => {
     try {
@@ -53,10 +52,7 @@ const DashboardPage = ({ onLogout }) => {
   };
 
   const handleSignOutConfirm = () => {
-    sessionStorage.removeItem('token');
-    if (onLogout) {
-      onLogout();
-    }
+    logout();
     navigate('/login');
   };
 

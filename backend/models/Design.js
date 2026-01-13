@@ -27,6 +27,14 @@ const designSchema = new mongoose.Schema(
             type: String,
             default: 'Untitled Design'
         },
+        isFavorite: {
+            type: Boolean,
+            default: false
+        },
+        downloadCount: {
+            type: Number,
+            default: 0
+        },
         status: {
             type: String,
             enum: ['processing', 'completed', 'failed'],

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
@@ -10,68 +11,67 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import './styles/variables.css';
 import './App.css';
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('token'));
+// Protected route wrapper
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return <div className="loading-screen">Loading...</div>;
+  }
+  
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+// Auth route wrapper (redirects to dashboard if already logged in)
+const AuthRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return <div className="loading-screen">Loading...</div>;
+  }
+  
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : children;
+};
+
+function AppRoutes() {
+  const { login, validateToken } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Handle OAuth callback token
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
 
     if (token) {
-      sessionStorage.setItem('token', token);
-      setIsLoggedIn(true);
-      navigate('/dashboard', { replace: true });
+      validateToken(token).then((valid) => {
+        if (valid) {
+          sessionStorage.setItem('token', token);
+          navigate('/dashboard', { replace: true });
+        }
+      });
     }
-  }, [location, navigate]);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    sessionStorage.removeItem('token');
-  };
+  }, [location, navigate, login, validateToken]);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/login"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <LoginPage onLogin={handleLogin} />
-            )
-          }
-        />
+        <Route path="/login" element={<AuthRoute><LoginPage /></AuthRoute>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/create-account" element={<CreateAccountPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            isLoggedIn ? (
-              <DashboardPage onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <div className="not-found">
-              <h1>404</h1>
-              <p>Page not found</p>
-            </div>
-          }
-        />
+        <Route path="/create-account" element={<AuthRoute><CreateAccountPage /></AuthRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+        <Route path="*" element={<div className="not-found"><h1>404</h1><p>Page not found</p></div>} />
       </Routes>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
   );
 }
 

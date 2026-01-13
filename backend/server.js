@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const connectDB = require('./config/database');
 const passport = require('./config/passport');
+const { generalLimiter } = require('./middleware/rateLimiter');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -19,6 +20,7 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(generalLimiter); // Apply general rate limiting to all routes
 app.use(session({ 
     secret: process.env.SESSION_SECRET, 
     resave: false, 

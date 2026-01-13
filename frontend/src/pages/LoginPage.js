@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGem, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
-import { setToken } from '../utils/auth';
+import { useAuth } from '../context/AuthContext';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import './AuthPages.css';
@@ -24,11 +24,12 @@ const GitHubIcon = () => (
   </svg>
 );
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,8 +56,7 @@ const LoginPage = ({ onLogin }) => {
       const data = await response.json();
 
       if (response.ok && data.token) {
-        setToken(data.token);
-        onLogin();
+        await login(data.token, data.user);
         navigate('/dashboard');
       } else {
         setError(data.message || 'Login failed. Please check your credentials.');

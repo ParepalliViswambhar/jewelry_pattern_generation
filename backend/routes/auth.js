@@ -6,9 +6,25 @@ const crypto = require('crypto');
 const passport = require('passport');
 const User = require('../models/User');
 const { sendPasswordResetEmail } = require('../config/email');
+const { loginLimiter, passwordResetLimiter, createAccountLimiter } = require('../middleware/rateLimiter');
+const { authenticateToken } = require('../middleware/auth');
+
+// Get current user (validate token)
+router.get('/me', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('fullName email profilePicture');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ user: { fullName: user.fullName, email: user.email, profilePicture: user.profilePicture } });
+    } catch (error) {
+        console.error('Error in /me route:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 
 // Create account
-router.post('/create', async (req, res) => {
+router.post('/create', createAccountLimiter, async (req, res) => {
     try {
         const { fullName, email, phone, password } = req.body;
         if (!fullName || !email || !phone || !password) {
@@ -29,7 +45,7 @@ router.post('/create', async (req, res) => {
 });
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -60,7 +76,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Forgot Password - Request reset
-router.post('/forgot-password', async (req, res) => {
+router.post('/forgot-password', passwordResetLimiter, async (req, res) => {
     try {
         const { email } = req.body;
         if (!email) {

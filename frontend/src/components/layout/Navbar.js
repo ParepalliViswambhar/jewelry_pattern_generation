@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faGem, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faGem, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
 const Navbar = ({ isLoggedIn, onLogout, onSectionChange, activeSection, userProfile, transparent = false }) => {
