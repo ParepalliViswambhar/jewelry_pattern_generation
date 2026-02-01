@@ -53,7 +53,6 @@ const UploadSection = () => {
     try {
       const token = sessionStorage.getItem('token');
       
-      // Use the new generate endpoint that saves to Cloudinary
       const formData = new FormData();
       formData.append('imageInput', uploadedImage.file);
       
@@ -67,22 +66,13 @@ const UploadSection = () => {
         const data = await response.json();
         setGeneratedImage(data.design.designUrl);
       } else {
-        // Fallback to direct ML service if new endpoint fails
-        const processFormData = new FormData();
-        processFormData.append('imageInput', uploadedImage.file);
-        
-        const processResponse = await fetch(process.env.REACT_APP_ML_SERVICE_URL + '/process-image', {
-          method: 'POST',
-          body: processFormData,
-        });
-
-        if (processResponse.ok) {
-          const blob = await processResponse.blob();
-          setGeneratedImage(URL.createObjectURL(blob));
-        }
+        const errorData = await response.json();
+        console.error('Generation failed:', errorData.message);
+        alert('Failed to generate design. Please try again.');
       }
     } catch (error) {
       console.error('Generation error:', error);
+      alert('An error occurred while generating the design.');
     } finally {
       setIsGenerating(false);
     }
