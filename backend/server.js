@@ -14,6 +14,9 @@ const imageRoutes = require('./routes/image');
 
 const app = express();
 
+// Trust proxy - required for Render and other cloud platforms
+app.set('trust proxy', 1);
+
 // Connect to database
 connectDB();
 
