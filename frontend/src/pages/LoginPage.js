@@ -115,10 +115,6 @@ const LoginPage = () => {
 
             {error && <div className="auth-error">{error}</div>}
 
-            <div className="forgot-password-link">
-              <Link to="/forgot-password">Forgot password?</Link>
-            </div>
-
             <Button 
               type="submit" 
               fullWidth 

@@ -7,7 +7,6 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
 import CreateAccountPage from './pages/CreateAccountPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 import './styles/variables.css';
 import './App.css';
@@ -59,7 +58,6 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<AuthRoute><LoginPage /></AuthRoute>} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/create-account" element={<AuthRoute><CreateAccountPage /></AuthRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="*" element={<div className="not-found"><h1>404</h1><p>Page not found</p></div>} />

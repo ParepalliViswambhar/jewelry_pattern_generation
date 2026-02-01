@@ -19,15 +19,6 @@ const loginLimiter = rateLimit({
     skipSuccessfulRequests: true // Don't count successful logins
 });
 
-// Strict limiter for password reset - 3 requests per hour
-const passwordResetLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 hour
-    max: 3,
-    message: { message: 'Too many password reset requests, please try again in an hour' },
-    standardHeaders: true,
-    legacyHeaders: false
-});
-
 // Account creation limiter - 3 accounts per hour per IP
 const createAccountLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
@@ -40,6 +31,5 @@ const createAccountLimiter = rateLimit({
 module.exports = {
     generalLimiter,
     loginLimiter,
-    passwordResetLimiter,
     createAccountLimiter
 };
