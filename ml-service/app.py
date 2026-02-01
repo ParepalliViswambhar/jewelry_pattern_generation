@@ -1,6 +1,5 @@
 import os
 import io
-import time
 from collections import Counter
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
@@ -19,7 +18,7 @@ allowed_origins = os.getenv('ALLOWED_ORIGINS', 'http://localhost:3000,http://loc
 CORS(app, resources={r"/process-image": {"origins": allowed_origins}})
 
 # Load model
-MODEL_PATH = os.getenv('MODEL_PATH', 'generator_folder_50.keras')
+MODEL_PATH = os.getenv('MODEL_PATH', 'generator.keras')
 try:
     generator_model = tf.keras.models.load_model(MODEL_PATH)
     input_size = generator_model.input_shape[1:3]
@@ -27,10 +26,6 @@ try:
     print(f"Model input size: {input_size}")
 except Exception as e:
     raise RuntimeError(f"Failed to load the GAN model from '{MODEL_PATH}': {e}")
-
-# Ensure output directory exists
-GENERATED_DIR = os.getenv('GENERATED_DIR', 'generated')
-os.makedirs(GENERATED_DIR, exist_ok=True)
 
 # Function to detect the dominant background color
 def detect_dominant_color(image):
@@ -130,11 +125,7 @@ def process_image():
         output_tensor = generator_model.predict(input_tensor)
         output_image = postprocess_image(output_tensor[0], output_format)
 
-        # Save generated image with a unique filename
-        output_filename = os.path.join(GENERATED_DIR, f"generated_{int(time.time())}.{output_format.lower()}")
-        output_image.save(output_filename, format=output_format)
-
-        # Save image to buffer for response
+        # Send image directly in response (no local storage)
         image_io = io.BytesIO()
         output_image.save(image_io, format=output_format)
         image_io.seek(0)

@@ -216,17 +216,25 @@
   overflow: hidden;
   cursor: ew-resize;
   user-select: none;
+  background: #fff;
 }
 
 .comparison-image {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
 }
 
 .comparison-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 .comparison-image.sketch-side {
@@ -395,31 +403,35 @@
 /* Lightbox */
 .lightbox {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  padding: var(--space-xl);
+  z-index: 9999;
+  padding: 80px 40px 40px 40px;
 }
 
 .lightbox-close {
-  position: absolute;
-  top: var(--space-xl);
-  right: var(--space-xl);
+  position: fixed;
+  top: 20px;
+  right: 20px;
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.8);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-full);
   color: var(--text-secondary);
   font-size: 1.25rem;
   cursor: pointer;
   transition: all var(--transition-fast);
+  z-index: 10000;
 }
 
 .lightbox-close:hover {
@@ -429,18 +441,29 @@
 }
 
 .lightbox-content {
-  width: 90vw;
-  max-width: 800px;
+  max-width: min(90vw, 90vh, 800px);
+  max-height: calc(100vh - 120px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lightbox-slider {
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 2px solid var(--border-subtle);
+  width: 100%;
+  max-height: calc(100vh - 120px);
 }
 
 .lightbox-slider .comparison-slider {
   aspect-ratio: 1;
+  max-height: calc(100vh - 120px);
+}
+
+.lightbox-slider .comparison-image img {
+  object-fit: contain;
 }
 
 .lightbox-slider .slider-button {
@@ -458,7 +481,28 @@
     grid-template-columns: 1fr;
   }
 
+  .lightbox {
+    padding: 60px 20px 20px 20px;
+  }
+
+  .lightbox-close {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
   .lightbox-content {
-    width: 95vw;
+    max-width: 95vw;
+    max-height: calc(100vh - 80px);
+  }
+
+  .lightbox-slider {
+    max-height: calc(100vh - 80px);
+  }
+
+  .lightbox-slider .comparison-slider {
+    max-height: calc(100vh - 80px);
   }
 }
