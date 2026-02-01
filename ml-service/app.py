@@ -135,5 +135,5 @@ def process_image():
         return jsonify({'error': f'An internal error occurred: {str(e)}'}), 500
 
 if __name__ == '__main__':
-    port = int(os.getenv('FLASK_PORT', 5000))
-    app.run(port=port, debug=os.getenv('FLASK_ENV') == 'development')
+    port = int(os.getenv('PORT', 7860))  # Hugging Face uses port 7860
+    app.run(host='0.0.0.0', port=port, debug=False)
