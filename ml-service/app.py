@@ -4,6 +4,11 @@ from collections import Counter
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
+
+# Set Keras backend before importing TensorFlow
+os.environ.setdefault('TF_ENABLE_ONEDNN_OPTS', '0')
+os.environ.setdefault('KERAS_BACKEND', 'tensorflow')
+
 import tensorflow as tf
 from PIL import Image
 import numpy as np

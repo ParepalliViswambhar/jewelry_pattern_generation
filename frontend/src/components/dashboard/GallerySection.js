@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faExpand, faTimes, faSpinner, faImages, faDownload, faHeart, faCheckSquare, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons';
@@ -25,19 +25,19 @@ const ComparisonSlider = ({ sketchUrl, designUrl, onDragStateChange }) => {
     if (onDragStateChange) onDragStateChange(true);
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     if (isDragging.current) {
       isDragging.current = false;
       if (onDragStateChange) onDragStateChange(false);
     }
-  };
+  }, [onDragStateChange]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (isDragging.current) {
       e.preventDefault();
       handleMove(e.clientX);
     }
-  };
+  }, []);
 
   const handleTouchStart = (e) => {
     e.stopPropagation();
@@ -45,10 +45,10 @@ const ComparisonSlider = ({ sketchUrl, designUrl, onDragStateChange }) => {
     if (onDragStateChange) onDragStateChange(true);
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = useCallback(() => {
     isDragging.current = false;
     if (onDragStateChange) onDragStateChange(false);
-  };
+  }, [onDragStateChange]);
 
   const handleTouchMove = (e) => {
     if (isDragging.current) {
@@ -65,7 +65,7 @@ const ComparisonSlider = ({ sketchUrl, designUrl, onDragStateChange }) => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('touchend', handleTouchEnd);
     };
-  }, []);
+  }, [handleMouseMove, handleMouseUp, handleTouchEnd]);
 
   return (
     <div className="comparison-slider" ref={containerRef} onTouchMove={handleTouchMove}>
